@@ -66,7 +66,7 @@ class FindSubset:
 
         try:  # build list of all jpg image files in directory
             self.path = self.path_entry.get()
-            images = list(entry for entry in os.listdir(self.path) if entry.endswith('.jpg'))
+            images = [entry for entry in os.listdir(self.path) if entry.endswith('.jpg')]
         except:
             messagebox.showerror(title='Invalid Directory',
                                  message='Invalid Search Directory:\n' + self.path)
@@ -148,7 +148,9 @@ class FindSubset:
                 self.results_table.config(height=len(self.results_table.get_children('')))
 
         self.progressbar.step()
-        self.status_var.set('Analyzed {} vs {} - {} pairs remaining...'.format(pair[0], pair[1], self.queue.qsize()))
+        self.status_var.set(
+            f'Analyzed {pair[0]} vs {pair[1]} - {self.queue.qsize()} pairs remaining...'
+        )
 
         if not self.queue.empty():
             self.master.after(10, self.process_queue)
